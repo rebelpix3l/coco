@@ -1,0 +1,49 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+  DIGITALOCEAN_CLUSTER_NAME: k8s-1-26-3-do-0-ams3-1684615442358
+  DIGITALOCEAN_NAMESPACE: zebi
+  DIGITALOCEAN_IMAGE_NAME: unnamed
+  DIGITALOCEAN_SERVICE_NAME: flask
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        run: docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+
+      - name: Build and tag Docker image
+        run: |
+          docker build -t $DOCKER_HUB_USERNAME/$DIGITALOCEAN_IMAGE_NAME .
+          docker tag $DOCKER_HUB_USERNAME/$DIGITALOCEAN_IMAGE_NAME $DOCKER_HUB_USERNAME/$DIGITALOCEAN_IMAGE_NAME:latest
+
+      - name: Push Docker image to Docker Hub
+        run: docker push $DOCKER_HUB_USERNAME/$DIGITALOCEAN_IMAGE_NAME:latest
+
+      - name: Install DigitalOcean CLI
+        run: |
+          curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-$(uname -s)-$(uname -m) > doctl
+          chmod +x doctl
+          sudo mv doctl /usr/local/bin
+
+      - name: Deploy to DigitalOcean Kubernetes
+        run: |
+          doctl auth init -t $DIGITALOCEAN_ACCESS_TOKEN
+          doctl kubernetes cluster kubeconfig save $DIGITALOCEAN_CLUSTER_NAME
+          doctl kubernetes cluster kubeconfig use $DIGITALOCEAN_CLUSTER_NAME
+          kubectl config use-context do-$DIGITALOCEAN_CLUSTER_NAME
+          kubectl create namespace $DIGITALOCEAN_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+          kubectl set image deployment/$DIGITALOCEAN_SERVICE_NAME $DIGITALOCEAN_SERVICE_NAME=$DOCKER_HUB_USERNAME/$DIGITALOCEAN_IMAGE_NAME:latest -n $DIGITALOCEAN_NAMESPACE
