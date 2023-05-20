@@ -9,10 +9,10 @@ env:
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
   DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
   DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-  DIGITALOCEAN_CLUSTER_NAME: your_digitalocean_cluster_name
-  DIGITALOCEAN_NAMESPACE: your_digitalocean_namespace
-  DIGITALOCEAN_IMAGE_NAME: your_digitalocean_image_name
-  DIGITALOCEAN_SERVICE_NAME: your_digitalocean_service_name
+  DIGITALOCEAN_CLUSTER_NAME: k8s-1-26-3-do-0-ams3-1684615442358
+  DIGITALOCEAN_NAMESPACE: zebi
+  DIGITALOCEAN_IMAGE_NAME: unnamed
+  DIGITALOCEAN_SERVICE_NAME: flask
 
 jobs:
   build_and_deploy:
