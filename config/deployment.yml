@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: static-example
+  name: staticExample
 spec:
   replicas: 0
   selector:
     matchLabels:
-      app: static-example
+      app: staticExample
   template:
     metadata:
       labels:
-        app: static-example
+        app: staticExample
     spec:
       containers:
-        - name: static-example
+        - name: staticExample
           image: <IMAGE>  # This placeholder will be replaced during the workflow
           ports:
             - containerPort: 8080
-        - name: static-example-svc
+        - name: staticExample
           image: <IMAGE>  # This placeholder will be replaced during the workflow
           ports:
             - containerPort: 8080
-      serviceAccountName: <SERVICE_ACCOUNT_NAME>  # Optional: Replace with your service account name
+
 
