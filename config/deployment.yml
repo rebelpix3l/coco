@@ -16,5 +16,5 @@ spec:
         - name: static-example
           image: <IMAGE>  # This placeholder will be replaced during the workflow
           ports:
-            - containerPort: 80
+            - containerPort: 8080
 
