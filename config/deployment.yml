@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: static3
+        app: static1
     spec:
       containers:
         - name: static4
