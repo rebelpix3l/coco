@@ -14,7 +14,7 @@ jobs:
 
       - name: Install doctl
         run: |
-          wget https://github.com/digitalocean/doctl/releases/latest/download/doctl-$(uname -s)-$(uname -m) -O doctl
+          wget https://github.com/digitalocean/doctl/releases/download/v1.96.0/doctl-1.96.0-$(uname -s)-$(uname -m) -O doctl
           chmod +x doctl
           sudo mv doctl /usr/local/bin
 
