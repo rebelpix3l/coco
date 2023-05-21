@@ -12,6 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install doctl
+        run: |
+          wget https://github.com/digitalocean/doctl/releases/latest/download/doctl-$(uname -s)-$(uname -m) -O doctl
+          chmod +x doctl
+          sudo mv doctl /usr/local/bin
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
