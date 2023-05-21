@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-example
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: static-example
+  template:
+    metadata:
+      labels:
+        app: static-example
+    spec:
+      containers:
+        - name: static-example
+          image: <IMAGE>  # This placeholder will be replaced during the workflow
+          ports:
+            - containerPort: 80
+
