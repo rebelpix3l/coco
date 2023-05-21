@@ -4,6 +4,14 @@ on:
     branches:
       - master
 
+
+
+env:
+  DIGITALOCEAN_CLUSTER_NAME: k8s-1-26-3-do-0-fra1-1684694904786
+  DIGITALOCEAN_NAMESPACE: coolerNamespace
+  DIGITALOCEAN_IMAGE_NAME: coco
+  DIGITALOCEAN_SERVICE_NAME: flask
+  
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -31,3 +39,14 @@ jobs:
         run: |
           docker build -t rebelpix3l/coco:latest .
           docker push rebelpix3l/coco:latest
+      
+      - name: Deploy to DigitalOcean Kubernetes
+        run: |
+          doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          doctl kubernetes cluster kubeconfig save $DIGITALOCEAN_CLUSTER_NAME
+          doctl kubernetes cluster kubeconfig use $DIGITALOCEAN_CLUSTER_NAME
+          kubectl config use-context do-$DIGITALOCEAN_CLUSTER_NAME
+          kubectl create namespace $DIGITALOCEAN_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+          kubectl set image deployment/$DIGITALOCEAN_SERVICE_NAME $DIGITALOCEAN_SERVICE_NAME=$DOCKER_HUB_USERNAME/$DIGITALOCEAN_IMAGE_NAME:latest -n $DIGITALOCEAN_NAMESPACE
+
+
