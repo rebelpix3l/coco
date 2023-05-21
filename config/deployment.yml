@@ -17,4 +17,21 @@ spec:
           image: <IMAGE>  # This placeholder will be replaced during the workflow
           ports:
             - containerPort: 8080
-
+      # Expose the deployment using a LoadBalancer service
+      # to get a public IP address
+      # Ensure the service is created in the same namespace
+      # as the deployment
+      # Adjust the `type` field if needed based on your cloud provider
+      # For DigitalOcean, the type should be `LoadBalancer`
+      # For other providers, you might need to use `NodePort`
+      # or another appropriate service type
+      # The service will be named `static-example-svc`
+      # and it will forward traffic to the container port 8080
+      # Update the `spec.ports` field if the container listens on a different port
+      # The public IP address will be available in the `status.loadBalancer.ingress` field
+      # of the created service
+      - name: static-example-svc
+        image: <IMAGE>  # This placeholder will be replaced during the workflow
+        ports:
+          - containerPort: 8080
+        type: LoadBalancer
