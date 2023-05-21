@@ -39,12 +39,15 @@ jobs:
           docker build -t rebelpix3l/coco:latest .
           docker push rebelpix3l/coco:latest
       
-      - name: Deploy to DigitalOcean Kubernetes
+      - name: Update deployment file
         run: |
-          doctl kubernetes cluster kubeconfig save $DIGITALOCEAN_CLUSTER_NAME
-          doctl kubernetes cluster kubeconfig use $DIGITALOCEAN_CLUSTER_NAME
-          kubectl config use-context $DIGITALOCEAN_CLUSTER_NAME
-          kubectl create namespace $DIGITALOCEAN_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
-          kubectl set image deployment/$DIGITALOCEAN_SERVICE_NAME $DIGITALOCEAN_SERVICE_NAME=$DOCKER_HUB_USERNAME/$DIGITALOCEAN_IMAGE_NAME:latest -n $DIGITALOCEAN_NAMESPACE
+          TAG=$(echo latest} | head -c7) && sed -i 's|<IMAGE>|rebelpix3l/coco:'${TAG}'|' ${{ github.workspace }}/config/deployment.yml
 
+      - name: Save DigitalOcean kubeconfig with short-lived credentials
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.DIGITALOCEAN_CLUSTER_NAME }}
 
+      - name: Deploy to DigitalOcean Kubernetes
+        run: kubectl apply -f ${{ github.workspace }}/config/deployment.yml
+
+      - name: Verify deployment
+        run: kubectl rollout status deployment/static-example
