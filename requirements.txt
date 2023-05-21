@@ -1,0 +1,9 @@
+django
+djangorestframework==3.14.0
+googlemaps==4.10.0
+google-api-python-client
+recipe_scrapers
+quantulum3
+ingredient_parser
+openai
+
