@@ -14,11 +14,11 @@ spec:
     spec:
       containers:
         - name: static4
-          image: <IMAGE>
+          image: rebelpix3l/coco:latest
           ports:
             - containerPort: 8080
         - name: static5
-          image: <IMAGE>
+          image: rebelpix3l/coco:latest
           ports:
             - containerPort: 8080
 ---
