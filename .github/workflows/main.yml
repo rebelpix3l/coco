@@ -50,7 +50,9 @@ jobs:
         run: kubectl apply -f ${{ github.workspace }}/config/deployment.yml
       - name: description
         run: kubectl describe deployment static1
+      - name: descrip
              kubectl describe pods -l app=static1
+      - name: logs
              kubectl logs
         
       - name: Verify deployment
