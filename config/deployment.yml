@@ -6,7 +6,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: static1  # Change to match the template labels
+      app: static1
   template:
     metadata:
       labels:
@@ -14,10 +14,29 @@ spec:
     spec:
       containers:
         - name: static4
-          image: <IMAGE>  # This placeholder will be replaced during the workflow
+          image: <IMAGE>
           ports:
             - containerPort: 8080
         - name: static5
-          image: <IMAGE>  # This placeholder will be replaced during the workflow
+          image: <IMAGE>
           ports:
             - containerPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: static1-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: static1
+                port:
+                  number: 8181
+  ingressClassName: do-loadbalancer
+  externalTrafficPolicy: Local
+  loadBalancerIP: 165.232.79.63
