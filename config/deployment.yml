@@ -14,11 +14,11 @@ spec:
     spec:
       containers:
         - name: static4
-          image: rebelpix3l/coco:latest
+          image: ${{ secrets.DOCKER_HUB_USERNAME }}/coco:latest
           ports:
             - containerPort: 8080
         - name: static5
-          image: rebelpix3l/coco:latest
+          image: ${{ secrets.DOCKER_HUB_USERNAME }}/coco:latest
           ports:
             - containerPort: 8080
 ---
