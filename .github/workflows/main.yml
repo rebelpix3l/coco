@@ -48,6 +48,7 @@ jobs:
         run: |
           doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           doctl kubernetes cluster kubeconfig save ${{ env.DIGITALOCEAN_CLUSTER_NAME }}
+          kubectl delete secret regcred
           kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=${{ secrets.DOCKER_HUB_USERNAME }} --docker-password=${{ secrets.DOCKER_HUB_PASSWORD }} --docker-email=nezar2134@gmail.com
 
       - name: Deploy to DigitalOcean Kubernetes
