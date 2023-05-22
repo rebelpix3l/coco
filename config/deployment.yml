@@ -36,6 +36,6 @@ spec:
               service:
                 name: static1
                 port:
-                  number: 80
+                  number: 8080
   ingressClassName: do-loadbalancer
 
