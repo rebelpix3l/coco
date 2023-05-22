@@ -36,7 +36,6 @@ spec:
               service:
                 name: static1
                 port:
-                  number: 8181
+                  number: 80
   ingressClassName: do-loadbalancer
-  externalTrafficPolicy: Local
-  loadBalancerIP: 165.232.79.63
+
