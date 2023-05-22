@@ -38,10 +38,6 @@ jobs:
         run: |
           docker build -t rebelpix3l/coco:latest .
           docker push rebelpix3l/coco:latest
-      
-      - name: Update deployment file
-        run: |
-          TAG=sed -i 's|<IMAGE>|rebelpix3l/coco:latest|' ${{ github.workspace }}/config/deployment.yml
       - name: Print deployment file
         run: cat ${{ github.workspace }}//config/deployment.yml
         
