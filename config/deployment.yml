@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: static1
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: static1  # Change to match the template labels
