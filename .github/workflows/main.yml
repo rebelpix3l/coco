@@ -41,7 +41,7 @@ jobs:
       
       - name: Update deployment file
         run: |
-          TAG=$(echo latest} | head -c7) && sed -i 's|<IMAGE>|rebelpix3l/coco:'${TAG}'|' ${{ github.workspace }}/config/deployment.yml
+          TAG=$(echo latest | head -c7) && sed -i 's|<IMAGE>|rebelpix3l/coco:'${TAG}'|' ${{ github.workspace }}/config/deployment.yml
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run: doctl kubernetes cluster kubeconfig save 7e40d303-cf37-4ab0-b693-7f78f6299617
