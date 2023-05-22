@@ -17,12 +17,6 @@ spec:
           image: ${{ secrets.DOCKER_HUB_USERNAME }}/coco:latest
           ports:
             - containerPort: 8080
-
-        - name: static5
-          image: ${{ secrets.DOCKER_HUB_USERNAME }}/coco:latest
-          ports:
-            - containerPort: 8080
-            
       imagePullSecrets:
           - name: regcred
 ---
