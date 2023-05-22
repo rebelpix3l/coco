@@ -51,9 +51,9 @@ jobs:
       - name: description
         run: kubectl describe deployment static1
       - name: descrip
-             kubectl describe pods -l app=static1
+        run:     kubectl describe pods -l app=static1
       - name: logs
-             kubectl logs
+        run:     kubectl logs
         
       - name: Verify deployment
         run: kubectl rollout status deployment/static1
