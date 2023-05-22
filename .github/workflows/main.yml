@@ -44,10 +44,10 @@ jobs:
           TAG=$(echo latest} | head -c7) && sed -i 's|<IMAGE>|rebelpix3l/coco:'${TAG}'|' ${{ github.workspace }}/config/deployment.yml
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
-        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.DIGITALOCEAN_CLUSTER_NAME }}
+        run: doctl kubernetes cluster kubeconfig save 7e40d303-cf37-4ab0-b693-7f78f6299617
 
       - name: Deploy to DigitalOcean Kubernetes
         run: kubectl apply -f ${{ github.workspace }}/config/deployment.yml
 
       - name: Verify deployment
-        run: kubectl rollout status deployment/static-example
+        run: kubectl rollout status deployment/static1
